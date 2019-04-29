@@ -39,9 +39,6 @@ export class IFramePluginFactory extends PluginFactory {
         windowManager.showWindow(parseInt(stringId, 10)); 
       }
     }, false);
-    window.addEventListener("mouseover", (event) => {
-      window.focus(); //Without giving focus back to the desktop, there is no easy way to tell for clicks between IFrame to IFrame
-    }, false);
   }
 
   static iframeIndex:number = 1;
@@ -69,6 +66,9 @@ export class IFramePluginFactory extends PluginFactory {
       iframeId:string = theIframeId;
       iFrameMouseOver(event: any) {
         iFrameElement = event.target;
+        if (event.target != document.activeElement) {
+          window.focus();
+        }
         if(dragOn) {
           event.target.style.pointerEvents = "none";
         }
